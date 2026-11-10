@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Smart Timetable — mLAC · B.Sc Data Science</title>
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    /* Home page hero and call-to-action band (matches the approved home design) */
+    .home-hero {
+      text-align: center;
+      padding: 64px 24px 24px;
+    }
+    .home-tag {
+      display: inline-block;
+      background: rgba(244,192,22,.22);
+      color: #7A5C00;
+      font-weight: 600;
+      font-size: 12.5px;
+      padding: 6px 14px;
+      border-radius: 999px;
+      margin-bottom: 20px;
+    }
+    .home-hero h1 {
+      font-size: clamp(34px, 5.4vw, 60px);
+      font-weight: 700;
+      line-height: 1.12;
+      max-width: 980px;
+      margin: 0 auto 18px;
+    }
+    .home-hero h1 em { font-style: normal; color: #037BC0; }
+    .home-hero p {
+      max-width: 620px;
+      margin: 0 auto;
+      color: #5A6275;
+      font-size: 17.5px;
+    }
+    .home-band {
+      margin-top: 40px;
+      background: #1B2A4A;
+      color: #fff;
+      border-radius: 18px;
+      padding: 40px 48px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+      flex-wrap: wrap;
+    }
+    .home-band h2 { font-size: 28px; font-weight: 600; margin: 0; }
+    .home-band p { margin: 6px 0 0; opacity: .92; }
+    .home-band .home-btn {
+      background: #fff;
+      color: #0A3F7D;
+      font-weight: 600;
+      padding: 12px 24px;
+      border-radius: 999px;
+      border: 0;
+      cursor: pointer;
+    }
+    .home-band .home-btn:hover { filter: brightness(.95); }
+    #ttContent[hidden], #ttEmpty[hidden] { display: none; }
+    .sidebar-logo {
+      width: 52px;
+      height: auto;
+      border-radius: 0;
+      flex: none;
+      background: none;
+      border: 0;
+    }
+    body.home-active {
+      background:
+        linear-gradient(rgba(16,23,40,.80), rgba(16,23,40,.80)),
+        url(college.jpg) center 35% / cover no-repeat fixed;
+      min-height: 100vh;
+    }
+    body.home-active .app,
+    body.home-active .main {
+      background: transparent !important;
+    }
+    #overview .overview-header {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      padding: 96px 24px 24px;
+      color: #fff;
+    }
+    #overview .overview-header .view-head { text-align: center; }
+    #overview .overview-header h1,
+    #overview .overview-header .lede { color: #fff; }
+    #overview .overview-header .eyebrow { color: #F4C016; }
+    #overview .overview-header .lede { margin-left: auto; margin-right: auto; }
+    /* Professional sizing and spacing for the home page */
+    #overview .overview-header h1 {
+      font-size: clamp(38px, 5.4vw, 64px);
+      font-weight: 700;
+      line-height: 1.12;
+      margin: 0 0 20px;
+    }
+    #overview .overview-header .lede {
+      font-size: 19px;
+      line-height: 1.6;
+      max-width: 720px;
+    }
+    #overview .home-band {
+      margin: 120px auto 0;
+      max-width: 1000px;
+      padding: 48px 56px;
+      border-radius: 20px;
+      box-shadow: 0 20px 48px rgba(0,0,0,.25);
+    }
+    #overview .home-band h2 {
+      font-size: 36px;
+      font-weight: 700;
+      line-height: 1.2;
+      margin: 0 0 10px;
+    }
+    #overview .home-band p {
+      font-size: 19px;
+      line-height: 1.6;
+      margin: 0;
+    }
+    #overview .home-band .home-btn {
+      font-size: 18px;
+      font-weight: 600;
+      padding: 16px 36px;
+      white-space: nowrap;
+    }
+    .tt-drop {
+      border: 2px dashed var(--line, #C9CFDB);
+      border-radius: 16px;
+      padding: 48px 20px;
+      text-align: center;
+      margin: 16px 0;
+      transition: .15s;
+      cursor: default;
+    }
+    .tt-drop.is-dragging {
+      border-color: #037BC0;
+      background: rgba(3,123,192,.06);
+    }
+    .tt-drop-icon { color: #037BC0; margin-bottom: 8px; }
+    .tt-browse {
+      color: #037BC0;
+      font-weight: 600;
+      text-decoration: underline;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body class="home-active">
+<div class="app">
+
+  <aside class="sidebar">
+    <div class="brand">
+      <img src="logo.png" alt="mLAC logo" class="sidebar-logo">
+      <div class="brand-text">
+        <strong>Smart Timetable</strong>
+        <span>mLAC · Computer Science Dept.</span>
+      </div>
+    </div>
+
+    <nav class="nav">
+      <button class="nav-link is-active" data-target="overview">
+        <span class="nav-dot"></span> Home
+      </button>
+      <button class="nav-link" data-target="about-project">
+        <span class="nav-dot"></span> About the project
+      </button>
+      <button class="nav-link" data-target="timetable">
+        <span class="nav-dot"></span> Timetable
+      </button>
+    </nav>
+
+    <div class="sidebar-foot">
+      <p><em>Developed by Harshitha N, Harshitha, Gagana S</em></p>
+    </div>
+  </aside>
+
+  <main class="main">
+
+    <!-- HOME -->
+    <section id="overview" class="view is-active">
+      <div class="overview-header">
+        <header class="view-head">
+          <p class="eyebrow">B.Sc Data Science · Computer Science Department</p>
+          <h1>Empowering faculty. Organising every week.</h1>
+          <p class="lede">The mLAC Smart Timetable turns one spreadsheet into a clash-free week for every semester, with labs, classrooms and faculty all kept apart.</p>
+        </header>
+
+      </div>
+
+      <div class="home-band">
+        <div>
+          <h2>Ready to build this semester’s timetable?</h2>
+          <p>Upload your dataset and see every semester laid out in seconds.</p>
+        </div>
+        <button class="home-btn" data-target="timetable">Generate Timetable</button>
+      </div>
+    </section>
+
+    <!-- ABOUT THE PROJECT -->
+    <section id="about-project" class="view">
+      <header class="view-head">
+        <p class="eyebrow">About the project</p>
+        <h1>Smart AI-Based Automatic Timetable Generator</h1>
+        <p class="lede">Built for the Department of Computer Science.</p>
+      </header>
+
+      <div class="panel">
+        <div class="panel-head"><h2>What the project does</h2></div>
+        <p>
+          Preparing a college timetable by hand means juggling faculty, classrooms, laboratories
+          and batches across several semesters. This project does it automatically from a single
+          dataset, and checks that nothing clashes.
+        </p>
+      </div>
+
+      <div class="panel">
+        <div class="panel-head"><h2>How it works</h2></div>
+        <table class="data-table">
+          <thead>
+            <tr><th>Step</th><th>What happens</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>1. Read the workbook</td><td>Academic, Resource, Batches, Faculty and Slot sheets are read and cleaned, and problem rows are flagged.</td></tr>
+            <tr><td>2. Plan labs, then theory</td><td>A Genetic Algorithm places lab blocks first, pairs faculty, then places every theory period.</td></tr>
+            <tr><td>3. Validate &amp; export</td><td>Every rule is re-checked from scratch, then the master and semester timetables are shown and exported to Excel.</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="panel">
+        <div class="panel-head"><h2>Technologies used</h2></div>
+        <p>Python · Genetic Algorithm · pandas · openpyxl · HTML · CSS · JavaScript</p>
+      </div>
+    </section>
+
+    <!-- TIMETABLE -->
+    <section id="timetable" class="view">
+      <header class="view-head">
+        <p class="eyebrow">Timetable</p>
+        <h1>Master timetable</h1>
+        <p class="lede">Every semester in one place.</p>
+      </header>
+
+      <div id="ttEmpty" class="panel">
+        <p>Your timetable will appear here once you upload a dataset.</p>
+        <div class="tt-drop" id="ttDrop">
+          <div class="tt-drop-icon" aria-hidden="true">
+            <svg viewBox="0 0 48 48" width="34" height="34">
+              <path d="M24 6v24M24 6l-9 9M24 6l9 9" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M8 32v6a4 4 0 0 0 4 4h24a4 4 0 0 0 4-4v-6" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </div>
+          <p><strong>Drag your dataset here</strong> or
+            <label for="ttFile" class="tt-browse">browse from your computer</label></p>
+          <p class="dropzone-hint">.xlsx workbook with Academic, Resource, Batches, Faculty and Slot sheets</p>
+          <input type="file" id="ttFile" accept=".xlsx,.xlsm,.xls" hidden>
+        </div>
+        <p class="fineprint" id="ttStatus"></p>
+      </div>
+
+      <div id="ttContent" hidden>
+      <div class="tabs" role="tablist">
+        <button class="tab is-active" data-sem="master">Master</button>
+        <button class="tab" data-sem="g1">Semester 1</button>
+        <button class="tab" data-sem="g3">Semester 3</button>
+        <button class="tab" data-sem="g5">Semester 5</button>
+      </div>
+
+      <div id="ttTables"></div>
+      </div>
+    </section>
+
+  </main>
+</div>
+
+<script>
+  // Sidebar navigation and in-page buttons (data-target)
+  const navLinks = document.querySelectorAll('.nav-link');
+  const views = document.querySelectorAll('.view');
+
+  function showView(id) {
+    views.forEach(view => {
+      view.classList.toggle('is-active', view.id === id);
+    });
+
+    navLinks.forEach(link => {
+      link.classList.toggle('is-active', link.dataset.target === id);
+    });
+
+    document.body.classList.toggle('home-active', id === 'overview');
+    window.scrollTo(0, 0);
+  }
+
+  document.querySelectorAll('[data-target]').forEach(el => {
+    el.addEventListener('click', () => showView(el.dataset.target));
+  });
+
+
+  // Timetable tabs: Master shows all semesters, others show one
+  const tabs = document.querySelectorAll('.tab');
+  const tables = document.getElementById('ttTables');
+
+  tabs.forEach(tab => {
+    tab.addEventListener('click', () => {
+      tabs.forEach(item => item.classList.remove('is-active'));
+      tab.classList.add('is-active');
+
+      const target = tab.dataset.sem;
+      tables.querySelectorAll(':scope > .grid-wrap').forEach(grid => {
+        grid.hidden = target !== 'master' && grid.id !== target;
+      });
+    });
+  });
+  </script>
+</body>
+</html>
